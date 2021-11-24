@@ -1,3 +1,2 @@
-fuck
-
-shitting mane
+# munting bot
+please don't use this bot
