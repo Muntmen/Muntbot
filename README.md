@@ -1,4 +1,2 @@
-# fuck
-
-shitting mane
-big wangs
+# munting bot
+please don't use this bot
