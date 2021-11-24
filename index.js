@@ -13,14 +13,17 @@ const client = new Discord.Client({
     ],
 });
 
+const config = require('./config.json');
+const token = config.token;
+
 client.on('ready', () => {
     console.log("We're in")
 })
 
-client.on("message", async message => {
-    if (message.content === "Peter") {
+client.on("messageCreate", async message => {
+    if (message.content === "peter") {
         message.channel.send("Rongkai Tian https://cdn.discordapp.com/attachments/691823245631946773/830719019567808552/peter.jpg")
     }
 })
 
-client.login("OTEzMDAyNTAxNjE0MjA2OTc2.YZ4J1w.5L8Cuaul55HrLw58BwiXUP7oiIg");
+client.login(token);
