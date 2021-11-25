@@ -11,7 +11,11 @@ global.matchType = {
     // needs to contain the command as a space separated substring, different casing allowed wAng <-> big wang s
     SUBSTRING: 3,
     // needs to contain the command with the same casing wAng <-> big wAng s
-    SUBSTRING_EXACT: 4
+    SUBSTRING_EXACT: 4,
+    // needs to be at the start but can have anything after, doesnt need to match case, wang eeee <-> wAng ooooo
+    START_WITH: 5,
+    // needs to be at the start but can have anything after, checks case wang eee <-> wang ooo
+    START_WITH_EXACT: 6,
 }
 
 module.exports = (client, msg) => {
@@ -48,11 +52,19 @@ module.exports = (client, msg) => {
                         command.execute(client, msg);
                     break;
                 case matchType.SUBSTRING:
-                    if (msg.content.toLowerCase().includes(command.name.toLowerCase()))
+                    if (msg.content.toLowerCase().includes(prefix+command.name.toLowerCase()))
                         command.execute(client, msg);
                     break;
                 case matchType.SUBSTRING_EXACT:
-                    if (msg.content.includes(command.name))
+                    if (msg.content.includes(prefix+command.name))
+                        command.execute(client, msg);
+                    break;
+                case matchType.START_WITH:
+                    if (msg.content.toLowerCase().startsWith(prefix+command.name.toLowerCase()))
+                        command.execute(client, msg);
+                    break;
+                case matchType.START_WITH_EXACT:
+                    if (msg.content.startsWith(prefix+command.name))
                         command.execute(client, msg);
                     break;
                 default:
