@@ -14,12 +14,14 @@ module.exports = {
     },
 };
 
+// general call and reply for the bot,
+// user says a key and the bot replies with the value
 function promptAndReply(msg) {
     const stuff = {
         "super idol": "https://www.youtube.com/watch?v=46pra8NwhzU",
         "coq": "**COQ**",
         "qola": "**you mean cOQ**",
-        "pull it in": "Guys!!! Teacher is using my P*ll it in method ! You can 300% use that in the exam",
+//        "pull it in": "Guys!!! Teacher is using my P*ll it in method ! You can 300% use that in the exam",
         "$feed": "yum, never do that again",
         "$grades": "https://student-profiles-sso.ed.act.edu.au/AcademicRecord",
         "jungkook": "jungkook",
@@ -35,6 +37,7 @@ function promptAndReply(msg) {
     })
 }
 
+// reply to specific users, value is a parameterless string function
 function memberReply(msg) {
     let thingtosay = {
         "913171847984582757" : (() => "so cool"), // coolbot
@@ -47,6 +50,7 @@ function memberReply(msg) {
     })
 }
 
+// block bad words
 function badstuck(msg) {
     // TODO: neural network 
     if (generalHelpers.isBad(msg.content)) {
@@ -62,6 +66,7 @@ function badstuck(msg) {
     }
 }
 
+// reply to muntbot being said
 function muntbot(msg) {
     if (msg.content.toLowerCase().includes ("muntbot"))
     {

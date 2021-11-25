@@ -40,36 +40,42 @@ module.exports = (client, msg) => {
             
             switch (command.match) {
                 case matchType.NONE:
-                    command.execute(client, msg);
+                    execute(command, client, msg);
                     break;
                 case matchType.SAME:
                     // lowercase both ends to ensure shit never hits the fan
                     if (msg.content.toLowerCase() === prefix + command.name.toLowerCase()) 
-                        command.execute(client, msg);
+                        execute(command, client, msg);
                     break;
                 case matchType.EXACT:
                     if (msg.content === prefix + command.name)
-                        command.execute(client, msg);
+                        execute(command, client, msg);
                     break;
                 case matchType.SUBSTRING:
                     if (msg.content.toLowerCase().includes(prefix+command.name.toLowerCase()))
-                        command.execute(client, msg);
+                        execute(command, client, msg);
                     break;
                 case matchType.SUBSTRING_EXACT:
                     if (msg.content.includes(prefix+command.name))
-                        command.execute(client, msg);
+                        execute(command, client, msg);
                     break;
                 case matchType.START_WITH:
                     if (msg.content.toLowerCase().startsWith(prefix+command.name.toLowerCase()))
-                        command.execute(client, msg);
+                        execute(command, client, msg);
                     break;
                 case matchType.START_WITH_EXACT:
                     if (msg.content.startsWith(prefix+command.name))
-                        command.execute(client, msg);
+                        execute(command, client, msg);
                     break;
                 default:
                     throw "shit hit the fan"
             }
         })
     })
+}
+
+// there used to be a really good reason for having this function
+// but in general it might be useful to unify execution like this anyway
+function execute(command, client, msg) {
+    command.execute (client,  msg)
 }
