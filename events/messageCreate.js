@@ -11,10 +11,15 @@ global.matchType = {
     // needs to contain the command as a space separated substring, different casing allowed wAng <-> big wang s
     SUBSTRING: 3,
     // needs to contain the command with the same casing wAng <-> big wAng s
-    SUBSTRING_EXACT: 4
+    SUBSTRING_EXACT: 4,
+    // needs to be at the start but can have anything after, doesnt need to match case, wang eeee <-> wAng ooooo
+    START_WITH: 5,
+    // needs to be at the start but can have anything after, checks case wang eee <-> wang ooo
+    START_WITH_EXACT: 6,
 }
 
 module.exports = (client, msg) => {
+    const LEGACY_PREFIX = "$"
     const PREFIX = "-"
     
     if (msg.author === client.user)
@@ -35,28 +40,42 @@ module.exports = (client, msg) => {
             
             switch (command.match) {
                 case matchType.NONE:
-                    command.execute(client, msg);
+                    execute(command, client, msg);
                     break;
                 case matchType.SAME:
                     // lowercase both ends to ensure shit never hits the fan
                     if (msg.content.toLowerCase() === prefix + command.name.toLowerCase()) 
-                        command.execute(client, msg);
+                        execute(command, client, msg);
                     break;
                 case matchType.EXACT:
                     if (msg.content === prefix + command.name)
-                        command.execute(client, msg);
+                        execute(command, client, msg);
                     break;
                 case matchType.SUBSTRING:
-                    if (msg.content.toLowerCase().includes(command.name.toLowerCase()))
-                        command.execute(client, msg);
+                    if (msg.content.toLowerCase().includes(prefix+command.name.toLowerCase()))
+                        execute(command, client, msg);
                     break;
                 case matchType.SUBSTRING_EXACT:
-                    if (msg.content.includes(command.name))
-                        command.execute(client, msg);
+                    if (msg.content.includes(prefix+command.name))
+                        execute(command, client, msg);
+                    break;
+                case matchType.START_WITH:
+                    if (msg.content.toLowerCase().startsWith(prefix+command.name.toLowerCase()))
+                        execute(command, client, msg);
+                    break;
+                case matchType.START_WITH_EXACT:
+                    if (msg.content.startsWith(prefix+command.name))
+                        execute(command, client, msg);
                     break;
                 default:
                     throw "shit hit the fan"
             }
         })
     })
+}
+
+// there used to be a really good reason for having this function
+// but in general it might be useful to unify execution like this anyway
+function execute(command, client, msg) {
+    command.execute (client,  msg)
 }
