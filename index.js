@@ -1,4 +1,7 @@
 const Discord = require('discord.js');
+const fs = require ("fs");
+
+// munting
 const client = new Discord.Client({
     allowedMentions: {
         parse: ['users', 'roles'],
@@ -13,17 +16,19 @@ const client = new Discord.Client({
     ],
 });
 
+// read events
+fs.readdir('./events/', (err, files) =>
+{
+    files.forEach(file =>
+    {
+        const eventHandler = require(`./events/${file}`)
+        const eventName = file.split('.')[0]
+        client.on(eventName, msg => eventHandler(client, msg))
+    })
+})
+
+// authentication
 const config = require('./config.json');
 const token = config.token;
-
-client.on('ready', () => {
-    console.log("We're in")
-})
-
-client.on("messageCreate", async message => {
-    if (message.content === "peter") {
-        message.channel.send("Rongkai Tian https://cdn.discordapp.com/attachments/691823245631946773/830719019567808552/peter.jpg")
-    }
-})
 
 client.login(token);
