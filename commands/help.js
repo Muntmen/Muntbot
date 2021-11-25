@@ -22,4 +22,3 @@ module.exports = {
             msg.channel.send(ret);
         })
     },
-};
