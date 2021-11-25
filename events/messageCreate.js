@@ -15,6 +15,7 @@ global.matchType = {
 }
 
 module.exports = (client, msg) => {
+    const LEGACY_PREFIX = "$"
     const PREFIX = "-"
     
     if (msg.author === client.user)

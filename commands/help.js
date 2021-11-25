@@ -1,6 +1,7 @@
 const { MessageEmbed } = require('discord.js');
 const fs = require ("fs")
 
+// automated, no need for tuchy
 module.exports = {
     name: "help",
     match: matchType.SAME,
