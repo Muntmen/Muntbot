@@ -1,17 +1,4 @@
-global.homestuck = [
-    "hive swap",
-    "hiveswap",
-    "h1veswap",
-    "h1v3swap",
-    "hiv3swap",
-    "h1ve swap",
-    "h1v3 swap",
-    "hiv3 swap",
-    "homestuck",
-    "homosucc",
-    "homosuck",
-    "http://www.mspaintadventures.com/",
-]
+const generalHelpers = require("../helpers/generalHelpers");
 
 module.exports = {
     name: "misc",
@@ -24,8 +11,8 @@ module.exports = {
         muntbot(msg)
         badstuck(msg)
         memberReply(msg)
-    }
-}
+    },
+};
 
 function promptAndReply(msg) {
     const stuff = {
@@ -51,7 +38,7 @@ function promptAndReply(msg) {
 function memberReply(msg) {
     let thingtosay = {
         "913171847984582757" : (() => "so cool"), // coolbot
-        "251576514188017664" : (() => getRandomFrom(["okay jaredbot", "yes partybot", ":partying_face:"])) // jaredbot
+        "251576514188017664" : (() => generalHelpers.getRandomFrom(["okay jaredbot", "yes partybot", ":partying_face:"])) // jaredbot
     }
     
     Object.entries(thingtosay).forEach(([key, value]) => {
@@ -61,20 +48,21 @@ function memberReply(msg) {
 }
 
 function badstuck(msg) {
-    // TODO: neural network
-
-    homestuck.some(word => {
-        if (msg.content.toLowerCase().includes(word)) {
-            msg.member.send("https://youtu.be/IFOvTWSYCbc \nhomestuck? you should know better smh").then(() => {
-            }).catch(() => msg.member.ban().then(() => {
-                msg.channel.send("homestuck bad like your mother xdxdxdxdx").catch(() => msg.reply("you got lucky this time.."))
-            }))
-        }
-    })
+    // TODO: neural network 
+    if (generalHelpers.isBad(msg.content)) {
+        // DM
+        msg.member.send("https://youtu.be/IFOvTWSYCbc \nhomestuck? you should know better smh").then(() => {
+            // Ban
+            msg.member.ban().then (() => {
+                msg.channel.send("homestuck bad like your mother xdxdxdxdx")
+            }).catch(() => {
+                msg.reply("you got lucky this time..")
+            })
+        })
+    }
 }
 
 function muntbot(msg) {
-    // muntbot
     if (msg.content.toLowerCase().includes ("muntbot"))
     {
         const reps = [
@@ -87,10 +75,6 @@ function muntbot(msg) {
             "wat u want",
             "your mother",
         ]
-        msg.reply (getRandomFrom(reps))
+        msg.reply (generalHelpers.getRandomFrom(reps))
     }
-}
-
-function getRandomFrom (collection) {
-    return collection[Math.floor((Math.random() * (collection.length)))]
 }
