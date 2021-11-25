@@ -1,24 +1,31 @@
-const fs = require("fs");
+const { MessageEmbed } = require('discord.js');
+const fs = require ("fs")
+
 module.exports = {
     name: "help",
     match: matchType.SAME,
     withPrefix: true,
     description: "shows this menu",
-    execute(client, msg) {
-        // TODO: make the menu look nicer
-        
-        let ret = "Help\n\n";
+    async execute(client, msg) {
+        let desc = ""
         
         // read commands
-        fs.readdir('./commands/', (err, files) =>
-        {
+        fs.readdir('./commands/', (err, files) => {
             files.forEach(file => {
                 const command = require(`../commands/${file}`)
-                if (command.withPrefix) {
-                    ret += "``-" + command.name + "``" + ` - ${command.description}\n`; // <- somebody please stop this 
-                }
+                if (command.withPrefix)
+                    desc += "`" + command.name + "` - " + command.description + "\n"
             })
-            
-            msg.channel.send(ret);
+
+            let helpEmbed = new MessageEmbed()
+                .setColor('#0099ff')
+                .setThumbnail("https://avatars.githubusercontent.com/u/94961737?s=200&v=4")
+                .setTitle('Help')
+                .setDescription("COQ")
+                .addField ("Commands (use - as the prefix)", desc)
+                .setTimestamp()
+                .setFooter("Also did not steal this from google.com")
+
+            msg.channel.send({embeds: [helpEmbed]});
         })
     },
