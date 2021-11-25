@@ -12,7 +12,6 @@ module.exports = {
         // read commands
         fs.readdir('./commands/', (err, files) =>
         {
-            console.log (files)
             files.forEach(file => {
                 const command = require(`../commands/${file}`)
                 if (command.withPrefix) {
