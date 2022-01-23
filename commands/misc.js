@@ -1,9 +1,7 @@
 const generalHelpers = require("../helpers/generalHelpers");
 
 module.exports = {
-    name: "misc",
     match: matchType.NONE,
-    withPrefix: false,
     description: "random replies, try to put all custom matching here",
     
     execute(client, msg) {

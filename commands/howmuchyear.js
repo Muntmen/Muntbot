@@ -1,8 +1,7 @@
 module.exports = {
     name : "howmuch" + new Date().getFullYear(), 
-    match : matchType.SAME,
-    withPrefix : true,
     description : "find out how far we are through the year",
+
     execute (client, msg) {
         let now = new Date();
         let start = new Date(now.getFullYear(), 0, 0);

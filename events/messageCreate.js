@@ -1,4 +1,6 @@
 const fs = require("fs");
+const path = require('path');
+const generalHelpers = require("../helpers/generalHelpers");
 
 // matching enum type
 global.matchType = {
@@ -19,7 +21,6 @@ global.matchType = {
 }
 
 module.exports = (client, msg) => {
-    const LEGACY_PREFIX = "$"
     const PREFIX = "-"
     
     if (msg.author === client.user)
@@ -30,14 +31,35 @@ module.exports = (client, msg) => {
     {
         files.forEach(file =>
         {
-            const command = require(`../commands/${file}`)
-            
-            if (command.name === undefined) 
-                throw "command has no name tag"
-            
-            const usePrefix = command.withPrefix === undefined ? true : command.withPrefix;
-            const prefix = usePrefix ? PREFIX : "";
-            
+            const comm = require(`../commands/${file}`)
+
+            // combine with default to get all parameters
+            const command = generalHelpers.getFullCommand (comm, path.parse(file).name)
+
+            // prefixes
+            const prefix = command.withPrefix ? PREFIX : "";
+
+            // permission
+            if (!generalHelpers.isUserAllowed (command, msg.member))
+                return;
+
+            // search for roles
+            if (command.perms.length > 0) {
+                let permission = false;
+                command.perms.every (cRoleName => {
+                    if (msg.member.roles.cache.some (aRole => aRole.name === cRoleName)) {
+                        permission = true;
+                        return false
+                    }
+                })
+
+                // user doesn't have the right role for command
+                if (!permission) {
+                    return;    
+                }
+            }
+
+            // matching and executing
             switch (command.match) {
                 case matchType.NONE:
                     execute(command, client, msg);

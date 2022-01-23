@@ -1,6 +1,4 @@
 module.exports = {
-        name : "peter",
-        match : matchType.SAME,
         withPrefix : false,
         description : "peter (rongkai) tian",
         execute (client, msg) {

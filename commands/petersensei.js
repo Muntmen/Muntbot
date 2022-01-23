@@ -1,7 +1,4 @@
 module.exports = {
-    name: "petersensei",
-    match: matchType.SAME,
-    withPrefix: true,
     description: "あなたのATARが最大にする方法",
     execute(client, msg) {
         msg.reply ("えっと、たくさんのすることができる科目があるんですけど、私たちはばかりどっちの科目は一番良いスケーリングがあると知らなきゃし、どっちは一番高いATARをくれます。はい、行ってみましょう。\n" +

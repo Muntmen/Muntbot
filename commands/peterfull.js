@@ -1,7 +1,5 @@
 module.exports = {
     name : "peter",
-    match : matchType.SAME,
-    withPrefix : true,
     description : "atar maximisation",
     execute (client, msg) {
             msg.reply("So there are lots of different subjects you can choose, but we just need to know: which one scales the best, and then which of the subjects will bring you the highest ATAR, yeah. So let’s have a look at the next page.\n")

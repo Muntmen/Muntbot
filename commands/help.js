@@ -1,19 +1,23 @@
+const path = require('path');
+const fs = require ("fs");
+const generalHelpers = require('../helpers/generalHelpers');
 const { MessageEmbed } = require('discord.js');
-const fs = require ("fs")
 
 // automated, no need for tuchy
 module.exports = {
-    name: "help",
-    match: matchType.SAME,
-    withPrefix: true,
     description: "shows this menu",
     async execute(client, msg) {
         let desc = ""
         
         // read commands
-        fs.readdir('./commands/', (err, files) => {
+        fs.readdir('./commands/', (_, files) => {
             files.forEach(file => {
-                const command = require(`../commands/${file}`)
+                const c = require(`../commands/${file}`)
+                const command = generalHelpers.getFullCommand(c, path.parse(file).name)
+
+                if (!generalHelpers.isUserAllowed (command, msg.member))
+                    return
+
                 if (command.withPrefix)
                     desc += "`" + command.name + "` - " + command.description + "\n"
             })
@@ -25,7 +29,6 @@ module.exports = {
                 .setDescription("COQ")
                 .addField ("Commands (use - as the prefix)", desc)
                 .setTimestamp()
-                .setFooter("Also did not steal this from google.com")
 
             msg.channel.send({embeds: [helpEmbed]});
         })
