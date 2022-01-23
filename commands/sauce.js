@@ -1,12 +1,12 @@
-const generalHelpers = require("../helpers/generalHelpers");
+const random = require ("random")
 
 module.exports = {
     description: "please dont' use this",
     execute(_, msg) {
-        var id = String(generalHelpers.randrange (2) + 1)
+        var id = String(random.int (1,3))
 
         for (var _ =0; _ < 5; _++)
-            id += generalHelpers.randrange (9)
+            id += random.int (1,9)
 
         msg.reply ("https://nhentai.net/g/" + id)
     },

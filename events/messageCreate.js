@@ -2,24 +2,6 @@ const fs = require("fs");
 const path = require('path');
 const generalHelpers = require("../helpers/generalHelpers");
 
-// matching enum type
-global.matchType = {
-    // always called, least restrictive
-    NONE: 0,
-    // must match the letters exactly, different casing is allowed.  wAng <-> wang
-    SAME: 1,
-    // must match the characters exactly, must have the same case. wang <-> wang and wAng </-> wang most restrictive
-    EXACT: 2,
-    // needs to contain the command as a space separated substring, different casing allowed wAng <-> big wang s
-    SUBSTRING: 3,
-    // needs to contain the command with the same casing wAng <-> big wAng s
-    SUBSTRING_EXACT: 4,
-    // needs to be at the start but can have anything after, doesnt need to match case, wang eeee <-> wAng ooooo
-    START_WITH: 5,
-    // needs to be at the start but can have anything after, checks case wang eee <-> wang ooo
-    START_WITH_EXACT: 6,
-}
-
 module.exports = (client, msg) => {
     const PREFIX = "-"
     
@@ -59,6 +41,14 @@ module.exports = (client, msg) => {
                 }
             }
 
+            // matching
+            if (!command.match(msg.content, prefix + command.name))
+                return;
+                
+            // execute
+            execute(command, client, msg)
+
+                /*
             // matching and executing
             switch (command.match) {
                 case matchType.NONE:
@@ -92,6 +82,7 @@ module.exports = (client, msg) => {
                 default:
                     throw "shit hit the fan"
             }
+                    */
         })
     })
 }

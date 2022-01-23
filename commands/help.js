@@ -6,7 +6,7 @@ const { MessageEmbed } = require('discord.js');
 // automated, no need for tuchy
 module.exports = {
     description: "shows this menu",
-    async execute(client, msg) {
+    execute(client, msg) {
         let desc = ""
         
         // read commands

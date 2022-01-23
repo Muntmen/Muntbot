@@ -1,6 +1,35 @@
+const random = require ("random")
+
 // TODO: need to store this in a better place
+
+// how to detect commands
+global.matchType = {
+    // predicates of type (shit user says, command including prefix)
+
+    // always called, least restrictive
+    NONE:               (_, __) => true,
+
+    // must match the letters exactly, different casing is allowed.  wAng <-> wang
+    SAME:               (u, c) => u.toLowerCase() === c.toLowerCase(),
+
+    // must match the characters exactly, must have the same case. wang <-> wang and wAng </-> wang most restrictive
+    EXACT:              (u, c) => u === c,
+
+    // needs to contain the command as a space separated substring, different casing allowed wAng <-> big wang s
+    SUBSTRING:          (u, c) => u.toLowerCase().includes(c.toLowerCase()),
+
+    // needs to contain the command with the same casing wAng <-> big wAng s
+    SUBSTRING_EXACT:    (u, c) => u.includes(c),
+
+    // needs to be at the start but can have anything after, doesnt need to match case, wang eeee <-> wAng ooooo
+    START_WITH:         (u, c) => u.toLowerCase().startsWith(c.toLowerCase()),
+
+    // needs to be at the start but can have anything after, checks case wang eee <-> wang ooo
+    START_WITH_EXACT:   (u, c) => u.startsWith(c),
+}
+
 global.DEFAULTS = {
-    match : 1,
+    match : global.matchType.SAME,
     withPrefix : true,
     description : "someone forgot to give this one a description HAH L",
     perms : [],
@@ -8,7 +37,6 @@ global.DEFAULTS = {
 }
 
 module.exports = {
-
     // combine with default to get all parameters
     getFullCommand : (comm, fileName = "") => {
         let ret = {
@@ -24,9 +52,8 @@ module.exports = {
         return ret;
     },
 
+    // whether a user is allowed to use a command
     isUserAllowed : (command, usr) => {
-        // search for roles
-
         // by default user does have permission (array lenght 0)
         let permission = true;
 
@@ -45,12 +72,8 @@ module.exports = {
         return permission
     },
 
-    randrange : (x) => {
-        return Math.floor((Math.random() * (x)))
-    },
-
     getRandomFrom : (collection) => {
-        return collection[randrange (collection.length)]
+        return collection[random.int (collection.length)]
     },
     
     isBad : function(word) {

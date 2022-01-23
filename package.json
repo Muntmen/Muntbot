@@ -18,6 +18,7 @@
   "homepage": "https://github.com/dohhyun/Muntbot#readme",
   "dependencies": {
     "discord": "^0.8.2",
-    "discord.js": "^13.3.1"
+    "discord.js": "^13.3.1",
+    "random": "^3.0.6"
   }
 }
