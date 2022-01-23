@@ -30,7 +30,7 @@ module.exports = (client, msg) => {
                 return;
             }
                 
-            command.execute (client,  msg)
+            command.execute (client, msg)
         })
     })
 }

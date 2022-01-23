@@ -28,7 +28,7 @@ fs.readdir('./events/', (err, files) =>
 })
 
 // authentication
-const config = require('./config.json');
-const token = config.token;
+const config = require('./secrets.json');
+const token = config.discord_token;
 
 client.login(token);
