@@ -73,10 +73,10 @@ module.exports = {
     },
 
     getRandomFrom : (collection) => {
-        return collection[random.int (collection.length)]
+        return collection[random.int (0, collection.length - 1)]
     },
     
-    isBad : function(word) {
+    isBad : (word) => {
         homestuck = [
             "hive swap",
             "hiveswap",

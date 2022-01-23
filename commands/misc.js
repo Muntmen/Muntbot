@@ -50,7 +50,6 @@ function memberReply(msg) {
 
 // block bad words
 function badstuck(msg) {
-    // TODO: neural network 
     if (generalHelpers.isBad(msg.content)) {
         // DM
         msg.member.send("https://youtu.be/IFOvTWSYCbc \nhomestuck? you should know better smh").then(() => {
