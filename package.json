@@ -17,8 +17,14 @@
   },
   "homepage": "https://github.com/dohhyun/Muntbot#readme",
   "dependencies": {
+    "@discordjs/opus": "^0.5.3",
+    "@discordjs/voice": "^0.7.5",
     "discord": "^0.8.2",
     "discord.js": "^13.3.1",
-    "random": "^3.0.6"
+    "ffmpeg": "^0.0.4",
+    "ffmpeg-static": "^4.4.1",
+    "random": "^3.0.6",
+    "sodium": "^3.0.2",
+    "youtube-dl": "^3.5.0"
   }
 }
