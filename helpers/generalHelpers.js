@@ -33,6 +33,8 @@ global.DEFAULTS = {
     withPrefix : true,
     description : "someone forgot to give this one a description HAH L",
     perms : [],
+    nsfw : false,
+    showInHelp : true,
     execute : (c, m) => { }
 }
 

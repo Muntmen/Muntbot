@@ -19,6 +19,5 @@ module.exports = {
         });
 
         connection.subscribe(player)
-        await msg.reply ("cum")
     }
 }

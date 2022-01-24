@@ -15,8 +15,13 @@ module.exports = {
                 const c = require(`../commands/${file}`)
                 const command = generalHelpers.getFullCommand(c, path.parse(file).name)
 
+                // perms
                 if (!generalHelpers.isUserAllowed (command, msg.member))
                     return
+
+                // misc
+                if (!command.showInHelp)
+                    return;
 
                 if (command.withPrefix)
                     desc += "`" + command.name + "` - " + command.description + "\n"

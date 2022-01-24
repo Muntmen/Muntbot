@@ -20,9 +20,16 @@ module.exports = (client, msg) => {
             // prefixes
             const prefix = command.withPrefix ? PREFIX : "";
 
-            // matching
+            // matching, additional checks should be done past this point
             if (!command.match(msg.content, prefix + command.name))
                 return;
+
+            // nsfw
+            if (command.nsfw && !msg.channel.nsfw) 
+            {
+                msg.reply ("not here..")
+                return;
+            }
 
             // permission
             if (!isUserAllowed (command, msg.member)) {

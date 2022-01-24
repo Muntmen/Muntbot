@@ -2,7 +2,8 @@ const random = require ("random")
 
 module.exports = {
     description: "please dont' use this",
-    execute(_, msg) {
+    nsfw: true,
+    execute: (_, msg) => {
         var id = String(random.int (1,3))
 
         for (var _ =0; _ < 5; _++)
